@@ -1,18 +1,19 @@
 
 import {instance} from "../app.js"
 
-export const  checkout =async(req,res,next)=>{
+export const  checkout =async(req,res)=>{
     
     try {
         const option = {
-            amount:50000,
+            amount : Number(req.body.amount * 100),
             currency:'INR'
         }
         const order = await instance.orders.create(option)
         console.log(order);
 
         res.status(200).json({
-            success:true
+            success:true,
+            order
             
         })
     } catch (error) {

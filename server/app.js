@@ -8,8 +8,11 @@ import paymentRouter from "./routes/paymentRouter.js";
 
 
 const app = express();
-app.use('/api',paymentRouter)
+
 app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use('/api',paymentRouter)
 
 export const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
