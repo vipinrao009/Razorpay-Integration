@@ -1,6 +1,7 @@
 
 import {instance} from "../app.js"
 import crypto from "crypto"
+import { Payment } from "../model/Payment.model.js"
 
 export const  checkout =async(req,res)=>{
     
@@ -41,8 +42,14 @@ export const paymentverification = async(req,res)=>{
     if(isAunthentic)
     {
         // Save in DB
-
+        await Payment.create({
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature
+        })
         res.redirect(`http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`)
+
+        res.status(200)
     }
     else
     {
